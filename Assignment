@@ -1,0 +1,72 @@
+// Our document should look like:
+
+{
+"name" : "Shiva Restaurant",
+"description" : "Hershey's oldest freestanding restaurant. A local favorite for 83+ years. Featuring our famous DeAngelis spaghetti sauces and our famous Upside Down pizza.",
+"ratings" : ["5*","Delicious","Very bad service"],
+"location" : {
+     "lat" : 1.10,
+     "lon" : 1.54
+}
+}
+
+
+// Defining Schema:
+
+curl -X PUT "http://localhost:3000/restaurants" -d '{
+   "index": {
+       "number_of_shards": 1,
+       "number_of_replicas": 1
+ },
+   "analysis":{    
+       "analyzer":{        
+           "flat" : {
+               "type" : "custom",
+               "tokenizer" : "keyword",
+               "filter" : "lowercase"
+           }
+       }
+   }
+}'
+ 
+echo
+curl -X PUT "http://localhost:3000/restaurants /restaurant/_mapping" -d '{
+   "restaurant" : {
+   "properties" : {
+       "name" : { "type" : "string" },
+       "description" : { "type" : "string" },
+       "ratings" : { "type" : "string[]" },
+       "location" : { "type" : "geo_point", "accuracy" : "1km" }
+   }}
+ 
+}'
+
+
+//Indexing a document in the index:
+curl -XPOST 'http://localhost:3000/restaurants/restaurant' -d '{
+   "name" : "Shiva Restaurant",
+   "description" : "Hershey's oldest freestanding restaurant. A local favorite for 83+ years. Featuring our famous DeAngelis spaghetti sauces and our famous Upside Down pizza.",
+   "ratings" : ["5*","Delicious","Very bad service"],
+   "location" : {
+     "lat" : 1.10,
+     "lon" : 1.54
+   }
+}'
+
+//Using a geo distance filter to find restaurants within a maximum distance of 500mt
+
+curl -XPOST 'http://localhost:3000/restaurants/_search' -d '{
+"query": {
+   "filtered": {
+     "filter": {
+       "geo_distance": {
+         "distance": "500m",
+         "location": {
+           "lat": 17.343242,
+           "lon": 78.342343
+         }
+       }
+     }
+   }
+}
+}'
