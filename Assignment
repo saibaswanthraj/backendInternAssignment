@@ -1,9 +1,9 @@
-// Our document should look like:
+//  Backend Developer intern assignment:
 
 {
-"name" : "Shiva Restaurant",
-"description" : "Hershey's oldest freestanding restaurant. A local favorite for 83+ years. Featuring our famous DeAngelis spaghetti sauces and our famous Upside Down pizza.",
-"ratings" : ["5*","Delicious","Very bad service"],
+"name" : "osos Restaurant",
+"description" : "Good relaxing break! Friendly, welcoming staff. Very good location for city centre and local transport. Overall an enjoyable.Excellent food.",
+"ratings" : ["5*","Delicious","Very good service"],
 "location" : {
      "lat" : 1.10,
      "lon" : 1.54
@@ -43,10 +43,11 @@ curl -X PUT "http://localhost:3000/restaurants /restaurant/_mapping" -d '{
 
 
 //Indexing a document in the index:
+
 curl -XPOST 'http://localhost:3000/restaurants/restaurant' -d '{
    "name" : "Shiva Restaurant",
-   "description" : "Hershey's oldest freestanding restaurant. A local favorite for 83+ years. Featuring our famous DeAngelis spaghetti sauces and our famous Upside Down pizza.",
-   "ratings" : ["5*","Delicious","Very bad service"],
+   "description" : "Good relaxing break! Friendly, welcoming staff. Very good location for city centre and local transport. Overall an enjoyable.Excellent food.",
+   "ratings" : ["5*","Delicious","Very good service"],
    "location" : {
      "lat" : 1.10,
      "lon" : 1.54
